@@ -10,9 +10,9 @@ WORKDIR /usr/src/app
 RUN corepack enable && \
 	corepack prepare --activate pnpm@latest && \
 	pnpm config -g set store-dir /.pnpm-store
-
-COPY --link ./server/package.json ./server/
-COPY --link ./client/package.json ./client/
+COPY ./package.json ./
+COPY ./server/package.json ./server/
+COPY ./client/package.json ./client/
 
 RUN cd client && \
     pnpm fetch && \
@@ -30,3 +30,4 @@ COPY ./server ./server
 COPY docker-entry.sh .
 
 CMD ["sh","./docker-entry.sh"]
+
