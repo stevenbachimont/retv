@@ -1,0 +1,11 @@
+{
+  "Transports": {
+    "train": 0.014,
+    "flight": 0.285,
+    "car": {
+      "small": 0.1,
+      "medium": 0.2,
+      "big": 0.3
+    }
+  }
+}

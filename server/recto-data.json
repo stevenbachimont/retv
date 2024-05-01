@@ -1,0 +1,37 @@
+{
+  "Transports": {
+    "train": 0.014,
+    "flight": 0.285,
+    "car": {
+      "small": 0.1,
+      "medium": 0.2,
+      "big": 0.3
+    }
+  },
+  "Logement_electromenagers": {
+    "electricity": 0.4,
+    "gas": 0.2,
+    "apartment": 15,
+    "house": 20,
+    "appliance": 0.5,
+    "electronic": 0.3
+  },
+  "Alimentation": {
+    "redMeat": 27,
+    "whiteMeat": 6.9,
+    "pork": 7.2,
+    "bulkFoodPurchase": {
+      "none": 1,
+      "partial": 0.9,
+      "total": 0.8
+    }
+  },
+  "Vetements": {
+    "large": 15,
+    "small": 10,
+    "madein": {
+      "france": 1,
+      "autre": 1.2
+    }
+  }
+}

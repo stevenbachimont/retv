@@ -1,0 +1,45 @@
+h2 {
+  color: #2d2c21;
+  margin-bottom: 20px;
+}
+
+form {
+  display: grid;
+  gap: 0;
+  align-items: center;
+  justify-items: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2d2c21;
+}
+
+input,
+select {
+  width: 50%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+p {
+  margin-top: 20px;
+  color: #2d2c21;
+}
+
+#carbonCalculator1,
+#carbonCalculator2,
+#carbonCalculator3,
+#carbonCalculator4 {
+  width: 400px;
+  background-color: rgba(139, 171, 165, 0.82);
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
