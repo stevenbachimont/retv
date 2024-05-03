@@ -98,12 +98,10 @@ app.post('/api/userdata', (req, res) => {
       userData = {};
     }
 
-    // Create a new "database" for the user if it doesn't exist
     if (!userData[username]) {
       userData[username] = {};
     }
 
-    // Store the form data in the user's "database"
     userData[username] = { ...userData[username], ...formData };
 
     fs.writeFile('user-data.json', JSON.stringify(userData), (writeError) => {

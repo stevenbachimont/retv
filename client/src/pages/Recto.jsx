@@ -1,17 +1,20 @@
 import "./css/Recto.css";
 import "../App.css";
+import { useContext } from "react";
+import {TotalUserContext} from "../Contextes/TotalUserContext.jsx";
 import { useState, useEffect, useRef } from "react";
 import { Transports } from "../components/Recto/Transports";
-import Logement_electromenagers from '../components/Recto/Logement_electromenagers';
+import { Logement_electromenagers } from '../components/Recto/Logement_electromenagers';
 import { Alimentation } from "../components/Recto/Alimentation";
 import { Vetements } from "../components/Recto/Vetements";
 import Chart from "chart.js/auto";
 
 function Recto() {
+  const { setTotalUser } = useContext(TotalUserContext);
   const [transportEmissions, setTransportEmissions] = useState(0);
   const [housingEmissions, setHousingEmissions] = useState(0);
   const [appliancesElectronicsEmissions, setAppliancesElectronicsEmissions] =
-    useState(0);
+      useState(0);
   const [foodEmissions, setFoodEmissions] = useState(0);
   const [clothingEmissions, setClothingEmissions] = useState(0);
   const [totalEmissions, setTotalEmissions] = useState(0);
@@ -36,13 +39,14 @@ function Recto() {
 
   useEffect(() => {
     let total =
-      transportEmissions +
-      housingEmissions +
-      appliancesElectronicsEmissions +
-      foodEmissions +
-      clothingEmissions +
-      emissionFactors.servicesCommuns;
+        transportEmissions +
+        housingEmissions +
+        appliancesElectronicsEmissions +
+        foodEmissions +
+        clothingEmissions +
+        emissionFactors.servicesCommuns;
     setTotalEmissions(total);
+    setTotalUser(total);
   }, [
     transportEmissions,
     housingEmissions,

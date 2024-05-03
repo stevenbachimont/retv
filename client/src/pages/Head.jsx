@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { UserConnectionContext } from "../Contextes/ConnectionContext";
 import "./css/Head.css";
 
+
 function Head() {
     const { isConnected, username } = useContext(UserConnectionContext);
 

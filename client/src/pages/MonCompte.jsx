@@ -1,19 +1,19 @@
-import "./css/MonCompte.css";
-import "../App.css";
 import {useContext} from "react";
+import {TotalUserContext} from "../Contextes/TotalUserContext.jsx";
 import {UserConnectionContext} from "../Contextes/ConnectionContext";
 
-function Head() {
-    const { isConnected, username } = useContext(UserConnectionContext);
-    // Rest of your Head function code
-}
+import "./css/MonCompte.css";
+import "../App.css";
 
 function MonCompte() {
+    const { totaluser } = useContext(TotalUserContext);
     const { username } = useContext(UserConnectionContext);
     return (
         <>
             <div className="test">
-                <h1>{username}</h1>
+                <h1>{username || "Non connecté"},</h1>
+                <p>ta consommation annuelle</p>
+                <p>est {totaluser} Kg de CO2</p>
             </div>
         </>
     );

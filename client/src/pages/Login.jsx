@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/Login.css";
 import { UserConnectionContext } from "../Contextes/ConnectionContext";
+import PopUp from "../components/PopUp/PopUp.jsx";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -64,6 +65,7 @@ function Login() {
             </form>
           </div>
         </div>
+        <PopUp />
       </>
   );
 }
