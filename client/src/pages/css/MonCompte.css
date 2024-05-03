@@ -1,6 +1,6 @@
 .test {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     width: 400px;
@@ -17,4 +17,11 @@
     font-size: 2.5em;
     color: #262670;
     text-align: center;
+}
+
+p {
+    font-size: 1.5em;
+    color: #262670;
+    text-align: center;
+    margin: 0;
 }

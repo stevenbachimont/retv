@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/NewUser.css";
+import PopUp from "../components/PopUp/PopUp.jsx";
 
 function NewUser() {
   const [username, setUsername] = useState("");
@@ -39,6 +40,7 @@ function NewUser() {
       });
   };
   return (
+      <>
     <div id="card1" className="card">
       <form onSubmit={handleSubmit}>
         <label>
@@ -61,6 +63,8 @@ function NewUser() {
         {errorMessage && <p className="error">{errorMessage}</p>}
       </form>
     </div>
+
+  </>
   );
 }
 

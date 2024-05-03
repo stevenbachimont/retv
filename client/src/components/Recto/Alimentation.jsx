@@ -1,19 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserConnectionContext } from "../../Contextes/ConnectionContext";
 import "./css/Formulaires.css";
 
 export const Alimentation = ({ onEmissionsChange }) => {
-  const [redMeatConsumption, setRedMeatConsumption] = useState(
-      localStorage.getItem("redMeatConsumption") || 0
-  );
-  const [whiteMeatConsumption, setWhiteMeatConsumption] = useState(
-      localStorage.getItem("whiteMeatConsumption") || 0
-  );
-  const [porkConsumption, setPorkConsumption] = useState(
-      localStorage.getItem("porkConsumption") || 0
-  );
-  const [bulkFoodPurchase, setBulkFoodPurchase] = useState(
-      localStorage.getItem("bulkFoodPurchase") || "none"
-  );
+  const { isConnected, username } = useContext(UserConnectionContext);
+  const [redMeatConsumption, setRedMeatConsumption] = useState(localStorage.getItem("redMeatConsumption") || 0);
+  const [whiteMeatConsumption, setWhiteMeatConsumption] = useState(localStorage.getItem("whiteMeatConsumption") || 0);
+  const [porkConsumption, setPorkConsumption] = useState(localStorage.getItem("porkConsumption") || 0);
+  const [bulkFoodPurchase, setBulkFoodPurchase] = useState(localStorage.getItem("bulkFoodPurchase") || "none");
 
   const [emissionFactors, setEmissionFactors] = useState({
     redMeat: 0,
@@ -25,6 +19,61 @@ export const Alimentation = ({ onEmissionsChange }) => {
       total: 0.8
     }
   });
+
+  const calculateEmissions = () => {
+    let redMeatEmissions = redMeatConsumption * emissionFactors.redMeat;
+    let whiteMeatEmissions = whiteMeatConsumption * emissionFactors.whiteMeat;
+    let porkEmissions = porkConsumption * emissionFactors.pork;
+
+    let foodEmissions = redMeatEmissions + whiteMeatEmissions + porkEmissions;
+
+    // Ajout de l'impact de l'achat en vrac
+    let bulkFoodPurchaseFactor = emissionFactors.bulkFoodPurchase[bulkFoodPurchase];
+    foodEmissions *= bulkFoodPurchaseFactor;
+
+    return foodEmissions;
+  };
+
+  const updateUserData = () => {
+    fetch(`http://localhost:3001/api/userdata/${username}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            setRedMeatConsumption(data.redMeatConsumption);
+            setWhiteMeatConsumption(data.whiteMeatConsumption);
+            setPorkConsumption(data.porkConsumption);
+            setBulkFoodPurchase(data.bulkFoodPurchase);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+  };
+
+  const saveUserData = () => {
+    if (!isConnected) {
+      console.log('User is not connected. Data will not be posted.');
+      return;
+    }
+
+    if (!username) {
+      console.log('Username is not defined. Data will not be posted.');
+      return;
+    }
+
+    fetch('http://localhost:3001/api/userdata', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, redMeatConsumption, whiteMeatConsumption, porkConsumption, bulkFoodPurchase }),
+    })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+  };
 
   useEffect(() => {
     fetch('http://localhost:3001/api/recto-data')
@@ -61,24 +110,11 @@ export const Alimentation = ({ onEmissionsChange }) => {
     emissionFactors
   ]);
 
-  const calculateEmissions = () => {
-    let redMeatEmissions = redMeatConsumption * emissionFactors.redMeat;
-    let whiteMeatEmissions = whiteMeatConsumption * emissionFactors.whiteMeat;
-    let porkEmissions = porkConsumption * emissionFactors.pork;
-
-    let foodEmissions = redMeatEmissions + whiteMeatEmissions + porkEmissions;
-
-    // Ajout de l'impact de l'achat en vrac
-    let bulkFoodPurchaseFactor = emissionFactors.bulkFoodPurchase[bulkFoodPurchase];
-    foodEmissions *= bulkFoodPurchaseFactor;
-
-    return foodEmissions;
-  };
-
   return (
       <>
         <form id="carbonCalculator3">
           <h2>Alimentation</h2>
+          <button type="button" onClick={updateUserData}>Mise à jour</button>
 
           <label htmlFor="redMeatConsumption">
             Consommation de viande rouge (kg) :
@@ -128,7 +164,9 @@ export const Alimentation = ({ onEmissionsChange }) => {
             <option value="partial">Partiel</option>
             <option value="total">Total</option>
           </select>
+
           <p>Émissions de carbone : {calculateEmissions()} kg</p>
+          <button type="button" onClick={saveUserData}>Post</button>
         </form>
       </>
   );
