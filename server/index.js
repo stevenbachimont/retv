@@ -10,8 +10,9 @@ const port = 3001;
 
 const users = require("./users.json");
 const rectodata = require("./recto-data.json");
+const versodata = require("./verso-data.json");
 const usersData = require("./user-data.json");
-const path = require("path");
+
 
 app.use(bodyParser.json());
 
@@ -93,7 +94,7 @@ app.post('/api/userdata', (req, res) => {
 
     let userData = JSON.parse(data);
 
-    // Check if userData is an object and not undefined
+
     if (typeof userData !== 'object' || userData === null) {
       userData = {};
     }
@@ -112,6 +113,19 @@ app.post('/api/userdata', (req, res) => {
 
       res.json({ message: 'User data saved successfully' });
     });
+  });
+});
+
+app.post("/api/verso-data", (req, res) => {
+  const newData = req.body;
+
+  fs.writeFile("./verso-data.json", JSON.stringify(newData), (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to write to file" });
+    } else {
+      res.status(200).json({ message: "Data updated successfully" });
+    }
   });
 });
 
