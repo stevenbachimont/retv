@@ -1,5 +1,6 @@
-
+import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import Button from '@material-ui/core/Button';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 100 },
@@ -22,24 +23,56 @@ const columns = [
         width: 150,
         editable: true,
     },
-
-];
-
-const rows = [
-    { id: 1, element: '', description: '', quantity: 35 },
-    { id: 2, element: '', description: '', quantity: 42 },
-    { id: 3, element: '', description: '', quantity: 45 },
-    { id: 4, element: '', description: '', quantity: 16 },
-    { id: 5, element: '', description: '', quantity: 23 },
-    { id: 6, element: '', description: '', quantity: 150 },
-    { id: 7, element: '', description: '', quantity: 44 },
-    { id: 8, element: '', description: '', quantity: 36 },
-    { id: 9, element: '', description: '', quantity: 65 },
 ];
 
 export default function DataTable() {
-    return (
+    const [rows, setRows] = useState([]);
+    const [dataPosted, setDataPosted] = useState(false);
 
+    useEffect(() => {
+        fetch('http://localhost:3001/api/verso-data')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setRows(data);
+                setDataPosted(false);
+            });
+    }, [dataPosted]);
+
+    const handleEditCellChangeCommitted = React.useCallback(
+        ({ id, field, props }) => {
+            const data = props; // New value
+            setRows((oldRows) => {
+                return oldRows.map((row) => {
+                    if (row.id === id) {
+                        return { ...row, [field]: data.value };
+                    }
+                    return row;
+                });
+            });
+        },
+        []
+    );
+    const handlePostClick = () => {
+        fetch('http://localhost:3001/api/verso-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(rows),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                setDataPosted(true);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    };
+
+
+    return (
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid
                 rows={rows}
@@ -47,8 +80,11 @@ export default function DataTable() {
                 pageSize={5}
                 checkboxSelection
                 disableSelectionOnClick
+                onEditCellChangeCommitted={handleEditCellChangeCommitted}
             />
+            <Button variant="contained" color="primary" onClick={handlePostClick}>
+                Post
+            </Button>
         </div>
-
     );
 }
