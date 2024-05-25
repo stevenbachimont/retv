@@ -13,7 +13,7 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-image: url("src/public/images/jungle.webp");
+  background-image: url("https://raw.githubusercontent.com/stevenbachimont/retv/main/client/src/public/images/jungle.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
