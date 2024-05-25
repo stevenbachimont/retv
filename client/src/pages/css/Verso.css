@@ -1,18 +1,18 @@
-.tableau {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 800px;
-  height: 800px;
-  background-color: rgba(138, 135, 109, 0.69);
-  border-radius: 15px;
-  align-content: center;
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    margin-top: 80px;
+    padding: 10px;
+    gap: 40px;
+    background-color: rgba(174, 168, 168, 0.67);
 }
 
- h1 {
-  font-size: 2.5em;
-  color: #262670;
-  text-align: center;
-     margin-top: 80px;
-}
+
+
+
+
+

@@ -13,21 +13,21 @@ function Head() {
                 <h1 className="headTitle">R&V</h1>
             </NavLink>
             <ul className="headList">
-                <NavLink className="headLien" activeClassName="active" to="/Recto">
+                <NavLink className="headLien" activeClassName="active" to="/recto">
                     Recto
                 </NavLink>
-                <NavLink className="headLien" activeClassName="active" to="/Verso">
+                <NavLink className="headLien" activeClassName="active" to="/verso">
                     Verso
                 </NavLink>
-                <NavLink className="headLien" activeClassName="active" to="/Test">
+                <NavLink className="headLien" activeClassName="active" to="/test">
                     Help
                 </NavLink>
                 {isConnected ? (
-                    <NavLink className="headLien" activeClassName="active" to="/mon-compte">
+                    <NavLink className="headLien" to="/mon-compte">
                         {username}
                     </NavLink>
                 ) : (
-                    <NavLink className="headLien" activeClassName="active" to="/Login">
+                    <NavLink className="headLien" activeClassName="active" to="/login">
                         Login
                     </NavLink>
                 )}

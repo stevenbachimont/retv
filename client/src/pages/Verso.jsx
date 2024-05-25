@@ -1,18 +1,21 @@
-import Tableau  from "../components/Verso/Tableau.jsx";
-
+import Chart1 from '../components/Verso/Chart1';
+import Chart2 from '../components/Verso/Chart2';
+import Chart3 from '../components/Verso/Chart3';
 import "./css/Verso.css";
-import "../App.css";
 
 function Verso() {
-  return (
-      <>
-          <h1>Verso</h1>
-          <div className="tableau">
-              <Tableau/>
-          </div>
-      </>
-  );
+
+    return (
+        <>
+            <div className="main">
+
+            <Chart1 />
+            <Chart2 />
+                <Chart3 />
+
+            </div>
+        </>
+    );
 }
 
 export default Verso;
-

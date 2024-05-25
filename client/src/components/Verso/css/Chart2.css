@@ -1,0 +1,9 @@
+#Chart2 {
+    display: block;
+    width: 400px;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(213, 162, 39, 0.69);
+    border-radius: 5px;
+}

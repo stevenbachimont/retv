@@ -134,7 +134,7 @@ function Recto() {
             <Vetements onEmissionsChange={setClothingEmissions} />
           )}
         </div>
-        <div className="card">
+        <div className="card1">
           <p>Total des émissions de carbone : {totalEmissions} kg</p>
           <canvas
             ref={chartRef}

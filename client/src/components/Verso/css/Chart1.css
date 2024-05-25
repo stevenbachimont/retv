@@ -1,0 +1,11 @@
+.card2 {
+    width: 400px;
+    height: 100%;
+    background-color: rgba(139, 171, 165, 0.82);
+    border-radius: 5px;
+    padding: 20px;
+    transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
+    margin-top: 5px;
+}
