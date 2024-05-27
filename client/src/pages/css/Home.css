@@ -13,3 +13,9 @@
   text-align: center;
   font-size: 15rem;
 }
+
+@media screen and (max-width: 600px) {
+  .corpus h2 {
+    font-size: 5rem;
+  }
+}
