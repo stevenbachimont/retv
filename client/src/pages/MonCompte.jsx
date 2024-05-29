@@ -6,14 +6,14 @@ import "./css/MonCompte.css";
 import "../App.css";
 
 function MonCompte() {
-    const { totaluser } = useContext(TotalUserContext);
+    const { Totaluser } = useContext(TotalUserContext);
     const { username } = useContext(UserConnectionContext);
     return (
         <>
             <div className="test">
                 <h1>{username || "Non connecté"},</h1>
                 <p>ta consommation annuelle</p>
-                <p>est {totaluser} Kg de CO2</p>
+                <p>est {Totaluser} Kg de CO2</p>
             </div>
         </>
     );

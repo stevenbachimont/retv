@@ -1,26 +1,26 @@
-.login {
+.card {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
   justify-content: center;
   width: 400px;
   height: 400px;
   background-color: rgba(138, 135, 109, 0.69);
   border-radius: 15px;
-  margin-top: 80px;
+  margin-top: 150px;
   gap: 40px;
   align-content: center;
 }
 
-.login > h2 {
+ h2 {
   margin: 0;
-  font-size: 2.5em;
+  font-size: 45px;
   color: #262670;
   text-align: center;
 }
 
 .login h1 {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   color: #333;
 }
 

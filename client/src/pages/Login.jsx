@@ -30,7 +30,6 @@ function Login() {
           <h2 aria-label={username || "User Connection"}>
             {username || "User Connection"}
           </h2>
-          <h3> WELCOME </h3>
           <div id="cards" className="cards">
 
             <form onSubmit={handleSubmit}>
@@ -65,7 +64,6 @@ function Login() {
             </form>
           </div>
         </div>
-        <PopUp />
       </>
   );
 }
