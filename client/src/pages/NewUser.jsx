@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/NewUser.css";
 import PopUp from "../components/PopUp/PopUp.jsx";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function NewUser() {
   const [username, setUsername] = useState("");
@@ -12,7 +13,7 @@ function NewUser() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetch("http://localhost:3001/api/users", {
+    fetch(`${apiUrl}/api/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

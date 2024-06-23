@@ -1,5 +1,7 @@
 import { createContext, useState } from "react";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const UserConnectionContext = createContext();
 
 // eslint-disable-next-line react/prop-types
@@ -8,7 +10,7 @@ export function UserConnectionProvider({ children }) {
     const [username, setUsername] = useState(null);
 
     const handleLogin = (username, password) =>
-        fetch("http://localhost:3001/api/auth", {
+        fetch(`${apiUrl}/api/auth`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

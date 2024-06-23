@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { UserConnectionContext } from "../../Contextes/ConnectionContext";
 import "./css/Formulaires.css";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const Vetements = ({ onEmissionsChange }) => {
   const { isConnected, username } = useContext(UserConnectionContext);
   const [largeClothingPurchase, setLargeClothingPurchase] = useState(localStorage.getItem("largeClothingPurchase") || 0);
@@ -29,7 +31,7 @@ export const Vetements = ({ onEmissionsChange }) => {
   };
 
   const updateUserData = () => {
-    fetch(`http://localhost:3001/api/userdata/${username}`)
+    fetch(`${apiUrl}/api/userdata/${username}`)
         .then(response => response.json())
         .then(data => {
           if (data) {
@@ -54,7 +56,7 @@ export const Vetements = ({ onEmissionsChange }) => {
       return;
     }
 
-    fetch('http://localhost:3001/api/userdata', {
+    fetch(`${apiUrl}/api/userdata`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +71,7 @@ export const Vetements = ({ onEmissionsChange }) => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/recto-data')
+    fetch(`${apiUrl}/api/recto-data`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');

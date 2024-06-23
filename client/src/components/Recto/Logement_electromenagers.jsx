@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { UserConnectionContext } from "../../Contextes/ConnectionContext";
 import "./css/Formulaires.css";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const Logement_electromenagers = ({ onEmissionsChange, onAppliancesElectronicsEmissionsChange }) => {
   const { isConnected, username } = useContext(UserConnectionContext);
   const [electricity, setElectricity] = useState(localStorage.getItem("electricity") || 0);
@@ -50,7 +52,7 @@ export const Logement_electromenagers = ({ onEmissionsChange, onAppliancesElectr
       return;
     }
 
-    fetch('http://localhost:3001/api/userdata', {
+    fetch(`${apiUrl}/api/userdata`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +67,7 @@ export const Logement_electromenagers = ({ onEmissionsChange, onAppliancesElectr
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/recto-data')
+    fetch(`${apiUrl}/api/recto-data`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -105,7 +107,7 @@ export const Logement_electromenagers = ({ onEmissionsChange, onAppliancesElectr
   }, [appliances, electronics, emissionFactors]);
 
   const updateUserData2 = () => {
-    fetch(`http://localhost:3001/api/userdata/${username}`)
+    fetch(`${apiUrl}/api/userdata/${username}`)
         .then(response => response.json())
         .then(data => {
           console.log(data);

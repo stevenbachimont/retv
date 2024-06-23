@@ -45,7 +45,7 @@ app.post("/api/auth", (req, res) => {
         res.status(500).json({ error: "Failed to authenticate" });
       } else if (result) {
         const token = jwt.sign({ username }, "your-secret-key", {
-          expiresIn: "1h",
+          expiresIn: "4h",
         });
         res.json({ token });
       } else {
