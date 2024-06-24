@@ -8,10 +8,12 @@ services:
     volumes:
       - ./client:/app
       - /app/node_modules
+      environment:
+      - VITE_API_URL=${VITE_API_URL}
   server:
     build: server
     ports:
-      - 3011:3011
+      - 3001:3001
     volumes:
       - ./server:/app
       - /app/node_modules
