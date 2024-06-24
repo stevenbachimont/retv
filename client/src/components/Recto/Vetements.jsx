@@ -6,9 +6,9 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Vetements = ({ onEmissionsChange }) => {
   const { isConnected, username } = useContext(UserConnectionContext);
-  const [largeClothingPurchase, setLargeClothingPurchase] = useState(localStorage.getItem("largeClothingPurchase") || 0);
-  const [smallClothingPurchase, setSmallClothingPurchase] = useState(localStorage.getItem("smallClothingPurchase") || 0);
-  const [madein, setMadein] = useState(localStorage.getItem("madein") || "france");
+  const [largeClothingPurchase, setLargeClothingPurchase] = useState(0);
+  const [smallClothingPurchase, setSmallClothingPurchase] = useState(0);
+  const [madein, setMadein] = useState("france");
 
   const [emissionFactors, setEmissionFactors] = useState({
     large: 0,
@@ -82,11 +82,6 @@ export const Vetements = ({ onEmissionsChange }) => {
         .catch(error => console.error('Error:', error));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("largeClothingPurchase", largeClothingPurchase);
-    localStorage.setItem("smallClothingPurchase", smallClothingPurchase);
-    localStorage.setItem("madein", madein);
-  }, [largeClothingPurchase, smallClothingPurchase, madein]);
 
   useEffect(() => {
     let clothingEmissions = calculateEmissions();

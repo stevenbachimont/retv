@@ -6,10 +6,10 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Alimentation = ({ onEmissionsChange }) => {
   const { isConnected, username } = useContext(UserConnectionContext);
-  const [redMeatConsumption, setRedMeatConsumption] = useState(localStorage.getItem("redMeatConsumption") || 0);
-  const [whiteMeatConsumption, setWhiteMeatConsumption] = useState(localStorage.getItem("whiteMeatConsumption") || 0);
-  const [porkConsumption, setPorkConsumption] = useState(localStorage.getItem("porkConsumption") || 0);
-  const [bulkFoodPurchase, setBulkFoodPurchase] = useState(localStorage.getItem("bulkFoodPurchase") || "none");
+  const [redMeatConsumption, setRedMeatConsumption] = useState(0);
+  const [whiteMeatConsumption, setWhiteMeatConsumption] = useState(0);
+  const [porkConsumption, setPorkConsumption] = useState(0);
+  const [bulkFoodPurchase, setBulkFoodPurchase] = useState("none");
 
   const [emissionFactors, setEmissionFactors] = useState({
     redMeat: 0,
@@ -23,9 +23,9 @@ export const Alimentation = ({ onEmissionsChange }) => {
   });
 
   const calculateEmissions = () => {
-    let redMeatEmissions = redMeatConsumption * emissionFactors.redMeat;
-    let whiteMeatEmissions = whiteMeatConsumption * emissionFactors.whiteMeat;
-    let porkEmissions = porkConsumption * emissionFactors.pork;
+    let redMeatEmissions = redMeatConsumption * (emissionFactors.redMeat || 0);
+    let whiteMeatEmissions = whiteMeatConsumption * (emissionFactors.whiteMeat || 0);
+    let porkEmissions = porkConsumption * (emissionFactors.pork || 0);
 
     let foodEmissions = redMeatEmissions + whiteMeatEmissions + porkEmissions;
 
@@ -88,18 +88,6 @@ export const Alimentation = ({ onEmissionsChange }) => {
         .then(data => setEmissionFactors(data.Alimentation))
         .catch(error => console.error('Error:', error));
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("redMeatConsumption", redMeatConsumption);
-    localStorage.setItem("whiteMeatConsumption", whiteMeatConsumption);
-    localStorage.setItem("porkConsumption", porkConsumption);
-    localStorage.setItem("bulkFoodPurchase", bulkFoodPurchase);
-  }, [
-    redMeatConsumption,
-    whiteMeatConsumption,
-    porkConsumption,
-    bulkFoodPurchase,
-  ]);
 
   useEffect(() => {
     let foodEmissions = calculateEmissions();

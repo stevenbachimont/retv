@@ -40,9 +40,16 @@ export function UserConnectionProvider({ children }) {
                 throw error;
             });
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        setIsConnected(false);
+        setUsername(null);
+    };
+
+
+
     return (
-        // eslint-disable-next-line react/jsx-no-constructed-context-values
-        <UserConnectionContext.Provider value={{ isConnected, handleLogin, username }}>
+        <UserConnectionContext.Provider value={{ isConnected, handleLogin, handleLogout, username }}>
             {children}
         </UserConnectionContext.Provider>
     );

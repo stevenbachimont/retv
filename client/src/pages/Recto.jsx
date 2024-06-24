@@ -56,49 +56,61 @@ function Recto() {
   ]);
 
   useEffect(() => {
-    if (chartRef.current) {
-      const chart = new Chart(chartRef.current, {
-        type: "bar",
-        data: {
-          labels: [
-            "Transport",
-            "Logement & Electroménagers",
-            "Alimentation",
-            "Vêtements",
-            "Services Communs",
-          ],
-          datasets: [
-            {
-              label: "Émissions de CO2 (kg)",
-              data: [
-                transportEmissions,
-                housingEmissions + appliancesElectronicsEmissions,
-                foodEmissions,
-                clothingEmissions,
-                emissionFactors.servicesCommuns,
-              ],
-              backgroundColor: [
-                "rgba(141,13,56,0.67)",
-                "rgba(95, 207, 163, 0.67)",
-                "rgba(32, 137, 255, 0.67)",
-                "rgba(255, 165, 0, 0.67)",
-                "rgba(255, 0, 0, 0.67)",
-              ],
-              borderColor: "rgb(0,0,0)",
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
+    const chart = new Chart(chartRef.current, {
+      type: "bar",
+      data: {
+        labels: [
+          "Transport",
+          "Logement & Electroménagers",
+          "Alimentation",
+          "Vêtements",
+          "Services Communs",
+        ],
+        datasets: [
+          {
+            label: "Émissions de CO2 (kg)",
+            data: [
+              transportEmissions,
+              housingEmissions + appliancesElectronicsEmissions,
+              foodEmissions,
+              clothingEmissions,
+              emissionFactors.servicesCommuns,
+            ],
+            backgroundColor: [
+              "rgba(141,13,56,0.67)",
+              "rgba(95, 207, 163, 0.67)",
+              "rgba(32, 137, 255, 0.67)",
+              "rgba(255, 165, 0, 0.67)",
+              "rgba(255, 0, 0, 0.67)",
+            ],
+            borderColor: "rgb(0,0,0)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
           },
         },
-      });
+      },
+    });
 
-      return () => chart.destroy();
+    return () => chart.destroy();
+  }, []);
+
+  useEffect(() => {
+    if (chartRef.current) {
+      const chart = Chart.getChart(chartRef.current);
+      chart.data.datasets[0].data = [
+        transportEmissions,
+        housingEmissions + appliancesElectronicsEmissions,
+        foodEmissions,
+        clothingEmissions,
+        emissionFactors.servicesCommuns,
+      ];
+      chart.update();
     }
   }, [
     transportEmissions,

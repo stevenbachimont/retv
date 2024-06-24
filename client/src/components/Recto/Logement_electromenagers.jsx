@@ -6,13 +6,13 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Logement_electromenagers = ({ onEmissionsChange, onAppliancesElectronicsEmissionsChange }) => {
   const { isConnected, username } = useContext(UserConnectionContext);
-  const [electricity, setElectricity] = useState(localStorage.getItem("electricity") || 0);
-  const [gas, setGas] = useState(localStorage.getItem("gas") || 0);
-  const [housingType, setHousingType] = useState(localStorage.getItem("housingType") || "apartment");
-  const [housingSize, setHousingSize] = useState(localStorage.getItem("housingSize") || 0);
-  const [occupants, setOccupants] = useState(localStorage.getItem("occupants") || 1);
-  const [appliances, setAppliances] = useState(localStorage.getItem("appliances") || 0);
-  const [electronics, setElectronics] = useState(localStorage.getItem("electronics") || 0);
+  const [electricity, setElectricity] = useState( 0);
+  const [gas, setGas] = useState(0);
+  const [housingType, setHousingType] = useState( "apartment");
+  const [housingSize, setHousingSize] = useState(0);
+  const [occupants, setOccupants] = useState(1);
+  const [appliances, setAppliances] = useState(0);
+  const [electronics, setElectronics] = useState(0);
 
   const [emissionFactors, setEmissionFactors] = useState({
     electricity: 0,
@@ -77,24 +77,6 @@ export const Logement_electromenagers = ({ onEmissionsChange, onAppliancesElectr
         .then(data => setEmissionFactors(data.Logement_electromenagers))
         .catch(error => console.error('Error:', error));
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("electricity", electricity);
-    localStorage.setItem("gas", gas);
-    localStorage.setItem("housingType", housingType);
-    localStorage.setItem("housingSize", housingSize);
-    localStorage.setItem("occupants", occupants);
-    localStorage.setItem("appliances", appliances);
-    localStorage.setItem("electronics", electronics);
-  }, [
-    electricity,
-    gas,
-    housingType,
-    housingSize,
-    occupants,
-    appliances,
-    electronics,
-  ]);
 
   useEffect(() => {
     let housingEmissions = calculateHousingEmissions();

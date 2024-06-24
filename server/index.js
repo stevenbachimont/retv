@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
+const argon2 = require('argon2');
 const jwt = require("jsonwebtoken");
 
 const app = express();
@@ -35,15 +35,12 @@ app.get("/api/userdata/:username", (req, res) => {
   }
 });
 
-app.post("/api/auth", (req, res) => {
+app.post("/api/auth", async (req, res) => {
   const { username, password } = req.body;
 
   if (users[username]) {
-    bcrypt.compare(password, users[username], (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to authenticate" });
-      } else if (result) {
+    try {
+      if (await argon2.verify(users[username], password)) {
         const token = jwt.sign({ username }, "your-secret-key", {
           expiresIn: "4h",
         });
@@ -51,35 +48,37 @@ app.post("/api/auth", (req, res) => {
       } else {
         res.status(401).json({ error: "Invalid credentials" });
       }
-    });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to authenticate" });
+    }
   } else {
     res.status(401).json({ error: "Invalid credentials" });
   }
 });
 
-app.post("/api/users", (req, res) => {
+app.post("/api/users", async (req, res) => {
   const { username, password } = req.body;
 
   if (users[username]) {
     res.status(400).json({ error: "Username already exists" });
   } else {
-    bcrypt.hash(password, 10, (err, hash) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to hash password" });
-      } else {
-        users[username] = hash;
+    try {
+      const hash = await argon2.hash(password);
+      users[username] = hash;
 
-        fs.writeFile("./users.json", JSON.stringify(users), (err) => {
-          if (err) {
-            console.error(err);
-            res.status(500).json({ error: "Failed to write to file" });
-          } else {
-            res.status(201).json({ message: "User created successfully" });
-          }
-        });
-      }
-    });
+      fs.writeFile("./users.json", JSON.stringify(users), (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: "Failed to write to file" });
+        } else {
+          res.status(201).json({ message: "User created successfully" });
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to hash password" });
+    }
   }
 });
 
@@ -115,6 +114,8 @@ app.post('/api/userdata', (req, res) => {
     });
   });
 });
+
+
 
 app.post("/api/verso-data", (req, res) => {
   const newData = req.body;
